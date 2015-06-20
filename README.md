@@ -14,21 +14,22 @@ Most of these are compiled from the wine-staging releases found here: https://gi
 
 * install [Wineskin Winery](http://wineskin.urgesoftware.com/tiki-index.php?page=Downloads)
 * Download and copy the engines you wish to use into ~/Library/Application Support/Wineskin/Engines
-* Create a new Wrapper and select the engine
- * OR 
-* Show package contents of an existing Wineskin wrapper you have already made, then:
- * open the *Wineskin* app you see in there
- * click **Advanced**
- * click **Tools** tab at top
- * click *Change Engine Used* button (right-most column, last button)
- * Select the new engine you wish to switch to and click OK
- * wait a few seconds for the new Engine to be installed, then check your Screen Options and winecfg settings (next)
+ * Create a new Wrapper and select the engine
+ OR 
+ * *Show package contents* of an existing Wineskin wrapper you have already made, then:
+  * open the *Wineskin* app you see in there
+  * click **Advanced**
+  * click **Tools** tab at top
+  * click *Change Engine Used* button (right-most column, last button)
+  * Select the new engine you wish to switch to and click OK
+  * wait a few seconds for the new Engine to be installed, then check your Screen Options and winecfg settings (next)
  
- Other Wineskin settings to enable:
- 
- * Screen Options
+ Screen Options
   * always choose *Automatic Screen settings* - trying to use any desktop Override has always resulted in crash before the character selection screen in SWTOR
   * Try *Use Mac Driver instead of X11* checked (it may take up to 20 seconds to actually launch on your first load, so wait a bit before clicking again.) If you are having serious performance issues, try again with Mac Driver off, but it should work better enabled on newer Mac hardware.
+  
+ Staging Engine Options
+ 
  * To enable the high performance graphics features of these engines, you will need to ensure some settings using the **Config Utility (winecfg)** tool from the Tools menu of each Wineskin wrapper you install this engine for.  After you *open winecfg*:
   * Under the **Staging** tab, make sure *Enable CSMT for better graphic performance* is checked.
   * Under **Libraries**, find *wined3d-csmt* and *d3dcompiler_43* and add them both as *native,builtin* libraries (you should also see the rest of the *d3dx9_##* libs in there as well for your normal SWTOR / Everquest II Wine setup)
