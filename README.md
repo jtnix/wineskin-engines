@@ -16,8 +16,8 @@ Most of these are compiled from the wine-staging releases found here: https://gi
 ## Engines
 updated Aug 9 2016
 
-* WS9Wine1.7.44-StagingSWTOR.tar.7z - contains patches to run SWTOR natively (without swtorfix.exe) and reduce volatility of the map/quest bug.
-* WS9Wine1.9.15-staging-NetworkTiming-10.11-libs.tar.7z - compiled against native 10.11.5 X11 libs and SDK; only works on El Capitan 10.11.x at this time.
+* **WS9Wine1.7.44-StagingSWTOR.tar.7z** - contains patches to run SWTOR natively (without swtorfix.exe) and reduce volatility of the map/quest bug.
+* **WS9Wine1.9.15-staging-NetworkTiming-10.11-libs.tar.7z** - compiled against native 10.11.5 X11 libs and SDK; only works on El Capitan 10.11.x at this time.
  
 ### How to use:
 
