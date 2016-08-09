@@ -1,14 +1,23 @@
 # wineskin-engines
-wineskin engines optimized for OS X 10.9 and beyond
+##### wineskin prepared engines optimized for OS X 10.9 Mavericks, 10.10 Yosemite and 10.11 El Capitan
 
-I've tested these successfully on 10.9.5 and 10.10.3 with online games like Star Wars: The Old Republic, Everquest II and Neverwinter Online and performance is quite good, especially on post-2012 Mac hardware.
+I've tested these successfully on 10.9.5, 10.10.3 and 10.11.5 specifically with online games Star Wars: The Old Republic, Everquest II and Neverwinter Online. Performance is excellent as of the recent updates to Wine 1.9, especially on post-2012 Mac hardware with AMD or nVidia graphics chips.
+
+*Disclaimer: do not expect success with lower end Apple systems, especially older Air or mini models that rely entirely on Intel integrated graphics.*
 
 Most of these are compiled from the wine-staging releases found here: https://github.com/wine-compholio/wine-staging/releases
 
+## Engine Patches
+**Notice** all engines contain the following patches:
+
+* additional thread.c routines that consistently updates a network timing segment used by some programs to authenticate usage or handshake with a server.  Specifically Star Wars: The Old Republic works with these engines *without* needing swtorfix.exe.  Please see https://bugs.winehq.org/show_bug.cgi?id=29168 for more info.
+* libpng.16 png library and texture compression library libtxc_dxtn.  You will need to install the additional Wrapper dylib to get support for these updated libraries. (see below)
+
 ## Engines
+updated Aug 9 2016
 
 * WS9Wine1.7.44-StagingSWTOR.tar.7z - contains patches to run SWTOR natively (without swtorfix.exe) and reduce volatility of the map/quest bug.
- * also contains the newer libpng.16 and libtxc_dxtn support.  You will need to install the additional Wrapper dylib below to get the new libpng and libtxc_dxtn support.
+* WS9Wine1.9.15-staging-NetworkTiming-10.11-libs.tar.7z - compiled against native 10.11.5 X11 libs and SDK; only works on El Capitan 10.11.x at this time.
  
 ### How to use:
 
@@ -16,7 +25,7 @@ Most of these are compiled from the wine-staging releases found here: https://gi
 * Download and copy the engines you wish to use into ~/Library/Application Support/Wineskin/Engines
  * Create a new Wrapper and select the engine
  OR 
- * *Show package contents* of an existing Wineskin wrapper you have already made, then:
+ * Use OS X to *Show package contents* of an existing Wineskin wrapper, then:
   * open the *Wineskin* app you see in there
   * click **Advanced**
   * click **Tools** tab at top
@@ -25,16 +34,16 @@ Most of these are compiled from the wine-staging releases found here: https://gi
   * wait a few seconds for the new Engine to be installed, then check your Screen Options and winecfg settings (next)
  
  Screen Options
-  * always choose *Automatic Screen settings* - trying to use any desktop Override has always resulted in crash before the character selection screen in SWTOR
-  * Try *Use Mac Driver instead of X11* checked (it may take up to 20 seconds to actually launch on your first load, so wait a bit before clicking again.) If you are having serious performance issues, try again with Mac Driver off, but it should work better enabled on newer Mac hardware.
+  * *Automatic Screen settings* - the best option, especially if experiencing crashes in SW:TOR on character select screen using 1.7 engine.
+  * Check *Use Mac Driver instead of X11* if you are having performance issues with the Wineskin X11 driver (last built in 2012!)  When using this setting it may take several seconds to actually appear launched on the taskbar.
   
  Staging Engine Options
  
  * To enable the high performance graphics features of these engines, you will need to ensure some settings using the **Config Utility (winecfg)** tool from the Tools menu of each Wineskin wrapper you install this engine for.  After you *open winecfg*:
-  * Under the **Staging** tab, make sure *Enable CSMT for better graphic performance* is checked.
+  * Under the **Staging** tab, try *Enable CSMT for better graphic performance* is checked. *note: keep this disabled if having crashes or using lower end Intel HD video chipsets
   * Under **Libraries**, find *wined3d-csmt* and *d3dcompiler_43* and add them both as *native,builtin* libraries (you should also see the rest of the *d3dx9_##* libs in there as well for your normal SWTOR / Everquest II Wine setup)
-  * Under **Applications**, I like to keep Windows Version at *Windows XP* or *Windows Vista* mode - YMMV
-  * Under **Graphics**, make sure *Automatically capture the mouse in full-screen windows* is checked.  This will keep your mouse from 'jumping' to the center of the screen on every click which has all kinds of bad effects on gameplay.  This still isn't perfect on SWTOR but seems to fix the problem on Everquest II.
+  * Under **Applications**, I like to keep Windows Version at *Windows XP* or *Windows Vista* mode, whatevs maybe
+  * Under **Graphics**, check *Automatically capture the mouse in full-screen windows*  This can keep your mouse from 'jumping' to the center of the screen on every click.  This seems to fix the problem on Everquest II.
 
  When you are done with settings, exit the *Wineskin* app, back out of your wine Wrapper package and give it a try!
 
@@ -50,17 +59,16 @@ To use most of the Engines listed above to their full potential, you will want t
  * Open the **Contents/Frameworks** folder
  * copy the files from the WrapperDylibs.zip file below into the opened **Contents/Frameworks** folder of your Wineskin wrapper
  
-To make this process easier to update for multiple Wineskin wrappers you may have out there you can also copy these files into *~/Library/Application Support/Wrapper/Wineskin-2.6.0.app/Contents/Frameworks* and then use the Update Wrapper option of your wrapper's internal Wineskin to refresh your wrapper internal libraries with the additional .dylib files.
+To make this process easier to update for multiple Wineskin wrappers you may have out there you can also copy these files into *~/Library/Application Support/Wrapper/Wineskin-2.6.x.app/Contents/Frameworks* and then use the Update Wrapper option of your wrapper's internal Wineskin to refresh your wrapper internal libraries with the additional .dylib files.
 
 
 ## Notes
  * The games this wine engine was designed and tested for are high-end 3D games that use your GPU to it's fullest. With this in mind:
-  * Do not expect it to work well or at all on integrated Intel chipsets, even the HD versions - it might work but if it doesn't, don't be surprised.
-  * Use your primary display, always. Do not attempt to use on an external or secondary screen, I've never had great success with this, especially with aspect ratio issues in SWTOR.
+  * This **may not work well or at all on integrated Intel chipsets**, even the HD versions. Give it a try, it might work but if it doesn't, don't be surprised.
+  * Use your primary display, always, especially on a laptop. Attempting to run games on a secondary displays will likely results in all kinds of funk, especially with aspect ratio on SWTOR.
   * If you are on a laptop with dual GPUs (most Macbook Pro models have dual GPUs, one for longer battery life and one for high-end graphics needs) be sure to set your System Preferences > Energy Saver > Graphics to Higher Performance, which will force your system to use the high-end GPU on your Macbook.
 
-Any other issues, please file a report here and I will update this readme with more info as I have it.
-
+Any other issues, please open an issue here and I try and help as best as possible.
 
 ## Special Thanks
 * compholio for the wine-staging releases, without these I would have given up my dream of playing SWTOR on a Mac
